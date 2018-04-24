@@ -4,12 +4,16 @@ services:
   tyk-dashboard:
     image: tykio/tyk-dashboard:v1.6.0
     container_name: tyk-dashboard
+    environment:
+      - TYK_DB_REDISHOST=tyk-redis
+      - TYK_DB_MONGOURL=tyk-mongo:27017
     ports:
       - "3000:3000"
       - "5000:5000"
     depends_on:
       - tyk-redis
       - tyk-mongo
+      - tyk-gateway
   tyk-gateway:
     image: tykio/tyk-gateway:v2.5.4
     container_name: tyk-gateway
