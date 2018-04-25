@@ -30,3 +30,9 @@ http://your-host:3000
 ```
 
 When we visit this url, we can see a page need a licensee, we can apply the licensee from tyk. Then we can use the username/password login the tyk-dashboard.
+
+## Setup first api
+
+- in dashboard, it is easy to new an api, I set the api name as "test".
+- visit, http://your-host:8080/test/get, it return "error": "Authorization field missing".
+

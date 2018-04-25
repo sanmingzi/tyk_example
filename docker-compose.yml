@@ -7,19 +7,27 @@ services:
     environment:
       - TYK_DB_REDISHOST=tyk-redis
       - TYK_DB_MONGOURL=tyk-mongo:27017
+      - TYK_DB_TYKAPI_HOST=http://tyk-gateway
+      - TYK_DB_TYKAPI_PORT=8080
+      - TYK_DB_NODESECRET=NODESECRET
     ports:
       - "3000:3000"
       - "5000:5000"
     depends_on:
       - tyk-redis
       - tyk-mongo
-      - tyk-gateway
+      # - tyk-gateway
   tyk-gateway:
     image: tykio/tyk-gateway:v2.5.4
     container_name: tyk-gateway
     environment:
       - TYK_GW_COPROCESSOPTIONS_ENABLECOPROCESS=false
       - TYK_GW_STORAGE_HOST=tyk-redis
+      - TYK_GW_ALLOWREMOTECONFIG=true
+      - TYK_GW_NODESECRET=NODESECRET
+    volumes:
+      - ./apps:/opt/tyk-gateway/apps
+      - ./tyk.with_dashboard.conf:/opt/tyk-gateway/tyk.conf
     ports:
       - 8080:8080
     depends_on:
